@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import java.util.zip.Inflater
+import android.widget.LinearLayout
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,9 +40,9 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
+                setOf(
+                        R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -89,7 +94,48 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.save_button -> {
+                val dialogBuilder = AlertDialog.Builder(this)
+                val editText = EditText(this);
+                val name = EditText(this);
 
+                val layout = LinearLayout(this)
+                layout.orientation = LinearLayout.VERTICAL
+
+// Add a TextView here for the "Title" label, as noted in the comments
+
+// Add a TextView here for the "Title" label, as noted in the comments
+
+                name.hint = "Title"
+                layout.addView(name) // Notice this is an add method
+
+
+// Add another TextView here for the "Description" label
+
+// Add another TextView here for the "Description" label
+
+                editText.hint = "Number of Counter"
+                layout.addView(editText) // Another add method
+
+                // set message of alert dialog
+                dialogBuilder.setMessage("edit counter ?")
+                        // if the dialog is cancelable
+                        .setCancelable(false).setView(layout)
+                        // positive button text and action
+                        .setPositiveButton("Proceed", DialogInterface.OnClickListener { dialog, id ->
+                            val text = findViewById<TextView>(R.id.text_home)
+                            text.text = editText.text.toString();
+                        })
+                        // negative button text and action
+                        .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+                            dialog.cancel()
+                        })
+
+                // create dialog box
+                val alert = dialogBuilder.create()
+                // set title for alert dialog box
+                alert.setTitle("editcounter")
+                // show alert dialog
+                alert.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
